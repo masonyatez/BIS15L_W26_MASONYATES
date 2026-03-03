@@ -1,0 +1,34 @@
+
+facet_wrap(~ variable)
+# Creates multiple panels based on ONE categorical variable
+
+facet_wrap(~ variable, nrow = 1)
+# Forces layout into a specific number of rows
+
+facet_wrap(~ variable, ncol = 2)
+# Forces layout into a specific number of columns
+
+facet_wrap(~ variable, scales = "free")
+# Allows both axes to vary between panels
+
+facet_wrap(~ variable, scales = "free_y")
+# Allows only y-axis to vary
+
+facet_wrap(~ variable, labeller = label_both)
+# Shows variable name AND value in strip label
+
+facet_grid(rows ~ cols)
+# Creates a grid of panels using TWO variables
+# rows variable on left, columns variable on top
+
+facet_grid(. ~ variable)
+# Facet across columns only
+
+facet_grid(variable ~ .)
+# Facet down rows only
+
+facet_grid(rows ~ cols, scales = "free")
+# Allows axes to vary between panels
+
+facet_grid(rows ~ cols, scales = "free_y")
+# Allows y-axis to vary by row
