@@ -1,0 +1,54 @@
+library(tidyverse)
+library(janitor)
+library(shiny)
+library(shinydashboard)
+library(shinythemes)
+
+elephants <- read_csv("data/elephants_data/elephants.csv") %>%
+  clean_names()
+
+ui <- dashboardPage(
+  
+  
+  dashboardHeader(title = "This is the Header"),
+  
+  dashboardSidebar(
+    selectInput("y",
+                "Select Elephant Attribute",
+                choices = c("age",
+                            "height"),
+                selected = "age")
+  ),
+  
+  dashboardBody(
+    
+    plotOutput("plot",
+               width = "600px",
+               height = "500px")
+  )
+)
+
+server <- function(input, output, session) {
+  output$plot <- renderPlot({
+    elephants %>% 
+      ggplot(
+        mapping = aes(
+          y = .data[[input$y]],
+          x = sex,
+          fill = sex
+        )
+      )+
+      geom_boxplot()+
+      labs(
+        title = "Elephant Attribute Ranges Between Sexs",
+        x = "Sex",
+        y = "Attribute",
+        fill = "Sex"
+      )+
+      theme_classic(
+        base_size = 20
+      )
+  })
+}
+
+shinyApp(ui, server)
